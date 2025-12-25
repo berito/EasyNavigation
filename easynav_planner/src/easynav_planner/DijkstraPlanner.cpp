@@ -98,6 +98,22 @@ void DijkstraPlanner::update(NavState & nav_state)
     RCLCPP_WARN(node->get_logger(), "[%s] Goal pose outside map bounds", get_plugin_name().c_str());
     return;
   }
+  if (start.x == goal.x && start.y == goal.y) {
+    RCLCPP_WARN(
+      node->get_logger(), "[%s] Goal cell matches the robot's current cell", get_plugin_name().c_str());
+    path_.header.stamp = node->now();
+    path_.header.frame_id = map.header.frame_id.empty() ? (get_tf_prefix() + "map") : map.header.frame_id;
+    path_.poses.clear();
+    path_.poses.reserve(1);
+
+    geometry_msgs::msg::PoseStamped pose;
+    pose.header = path_.header;
+    pose.pose.position = grid_to_world(map, start);
+    pose.pose.orientation.w = 1.0;
+    path_.poses.push_back(pose);
+    nav_state.set(path_key_, path_);
+    return;
+  }
 
   if (!is_cell_traversable(map, start)) {
     RCLCPP_WARN(node->get_logger(), "[%s] Start cell is not traversable", get_plugin_name().c_str());
