@@ -8,4 +8,12 @@
       </description>
     </class>
   </library>
+  <library path="dijkstra_planner">
+    <class name="easynav_planner/DijkstraPlanner"  type="easynav::DijkstraPlanner" base_class_type="easynav::PlannerMethodBase">
+      <description>
+      Grid-based Dijkstra planner for nav_msgs/OccupancyGrid maps. It reads the robot pose, goals, and map
+      from NavState and writes the planned nav_msgs/Path back into NavState.
+      </description>
+    </class>
+  </library>
 </class_libraries>

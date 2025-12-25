@@ -22,6 +22,7 @@
   <depend>rclcpp_lifecycle</depend>
   <depend>easynav_core</depend>
   <depend>pluginlib</depend>
+  <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
   <depend>lifecycle_msgs</depend>
 
